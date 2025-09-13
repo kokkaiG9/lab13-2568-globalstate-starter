@@ -17,7 +17,7 @@ export default function Sidebar() {
       style={{ height: "100%" }}
     >
       <Box>
-        <NavLink label="TodoCard" component={RouterNavLink} to="/" />
+        <NavLink label="TodoCard" component={RouterNavLink} to="/me.jpg" />
         <NavLink label="TodoTable" component={RouterNavLink} to="/todotable" />
       </Box>
       <Box p={10}>
@@ -33,7 +33,7 @@ export default function Sidebar() {
             <Avatar size="md" radius="xl" src="/charliebrown.jpg" />
           </Indicator>
           <Text component={RouterNavLink} to="/">
-            User : Chanadda : Admin
+            User : Theerapat : Student
           </Text>
         </Group>
       </Box>

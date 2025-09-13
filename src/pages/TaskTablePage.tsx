@@ -7,16 +7,29 @@ import {
   Table,
   ActionIcon,
   Checkbox,
+  Badge,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import AddTaskModal from "../components/AddTaskModal";
 import { useTaskStore } from "../store/TaskItemStore";
 
 export default function TodoTablePage() {
-  const { tasks, addTask, toggleTask, removeTask } = useTaskStore();
+  const { tasks, addTask, toggleTask, removeTask, setTasks } = useTaskStore();
   const [modalOpened, setModalOpened] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    if(isFirstLoad) {
+      setIsFirstLoad(false);
+      let get = localStorage.getItem("tasks");
+      if(get !== null) setTasks(JSON.parse(get));
+      return;
+    }
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const rows = tasks.map((task) => (
     <Table.Tr key={task.id}>
@@ -43,6 +56,13 @@ export default function TodoTablePage() {
         </ActionIcon>
       </Table.Td>
       {/* เพิ่ม row assignees ตรงนี้*/}
+      <Table.Td w={450}>
+        {
+          task.assignees.map((a) => (
+            <Badge color="rgba(34, 139, 230, .1)" c="blue">{a}</Badge>
+          ))
+        }
+      </Table.Td>
     </Table.Tr>
   ));
 
